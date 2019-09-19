@@ -16,20 +16,24 @@
 start_link() ->
     supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
-%% sup_flags() = #{strategy => strategy(),         % optional
-%%                 intensity => non_neg_integer(), % optional
-%%                 period => pos_integer()}        % optional
-%% child_spec() = #{id => child_id(),       % mandatory
-%%                  start => mfargs(),      % mandatory
-%%                  restart => restart(),   % optional
-%%                  shutdown => shutdown(), % optional
-%%                  type => worker(),       % optional
-%%                  modules => modules()}   % optional
+
 init([]) ->
-    SupFlags = #{strategy => one_for_all,
-                 intensity => 0,
+    ElockStatem = #{id => elock_statem,
+                    start => {elock_statem, start_link, ["1234"]},
+                    restart => permanent,
+                    type => worker,
+                    shutdown => 5000,
+                    modules => [elock_statem]},
+    OobSup = #{id => elock_oob_sup,
+               start => {elock_oob_sup, start_link, []},
+               restart => permanent,
+               type => supervisor,
+               shutdown => infinity,
+               modules => [elock_oob_sup]},
+    SupFlags = #{strategy => one_for_one,
+                 intensity => 10,
                  period => 1},
-    ChildSpecs = [],
+    ChildSpecs = [ElockStatem, OobSup],
     {ok, {SupFlags, ChildSpecs}}.
 
 %% internal functions

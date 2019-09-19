@@ -5,7 +5,9 @@
   {mod, {elock_app, []}},
   {applications,
    [kernel,
-    stdlib
+    stdlib,
+    sqlapi,
+    ssh
    ]},
   {env,[]},
   {modules, [
@@ -15,7 +17,7 @@
       elock_oob_sup,
       elock_sql_oob,
       elock_ssh_oob,
-      elock_http_oob
+      elock_sqlapi
   ]},
 
   {licenses, ["Apache 2.0"]},
