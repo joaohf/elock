@@ -7,7 +7,13 @@
 -export([init/1,callback_mode/0,terminate/3]).
 -export([locked/3,open/3]).
 
--export([get_statistics/0, get_timeout/0, set_timeout/1, get_code/0, get_service/0, set_service/1, reset_code/0]).
+-export([get_statistics/0,
+         get_timeout/0,
+         set_timeout/1,
+         get_code/0,
+         get_service/0,
+         set_service/1,
+         reset_code/0]).
 
 get_statistics() ->
     {ok, 10, 2}.
