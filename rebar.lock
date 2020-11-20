@@ -1,4 +1,8 @@
 [{<<"ranch">>,
   {git,"https://github.com/ninenines/ranch",
        {ref,"3190aef88aea04d6dce8545fe9b4574288903f44"}},
-  1}].
+  1},
+ {<<"sqlapi">>,
+  {git,"https://github.com/joaohf/sqlapi",
+       {ref,"d7484004c05a6a224e720f0dcd8377ef7167f77f"}},
+  0}].
