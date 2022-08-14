@@ -4,16 +4,18 @@
 
 -export([start_link/1]).
 -export([button/1]).
--export([init/1,callback_mode/0,terminate/3]).
--export([locked/3,open/3]).
+-export([init/1, callback_mode/0, terminate/3]).
+-export([locked/3, open/3]).
 
--export([get_statistics/0,
-         get_timeout/0,
-         set_timeout/1,
-         get_code/0,
-         get_service/0,
-         set_service/1,
-         reset_code/0]).
+-export([
+    get_statistics/0,
+    get_timeout/0,
+    set_timeout/1,
+    get_code/0,
+    get_service/0,
+    set_service/1,
+    reset_code/0
+]).
 
 get_statistics() ->
     {ok, 10, 2}.
@@ -33,11 +35,11 @@ set_service(Service) -> ok.
 
 reset_code() -> ok.
 
-start_link(Code) ->    
-    gen_statem:start_link({local,?NAME}, ?MODULE, Code, []).
+start_link(Code) ->
+    gen_statem:start_link({local, ?NAME}, ?MODULE, Code, []).
 
 button(Button) ->
-    gen_statem:cast(?NAME, {button,Button}).
+    gen_statem:cast(?NAME, {button, Button}).
 
 init(Code) ->
     io:format("code: ~p", [Code]),
@@ -49,8 +51,10 @@ callback_mode() ->
     state_functions.
 
 locked(
-  cast, {button,Button},
-  #{code := Code, length := Length, buttons := Buttons} = Data) ->
+    cast,
+    {button, Button},
+    #{code := Code, length := Length, buttons := Buttons} = Data
+) ->
     NewButtons =
         if
             length(Buttons) < Length ->
@@ -59,18 +63,21 @@ locked(
                 tl(Buttons)
         end ++ [Button],
     if
-        NewButtons =:= Code -> % Correct
-	    do_unlock(),
+        % Correct
+        NewButtons =:= Code ->
+            do_unlock(),
             {next_state, open, Data#{buttons := []},
-             [{state_timeout,10000,lock}]}; % Time in milliseconds
-	true -> % Incomplete | Incorrect
+                % Time in milliseconds
+                [{state_timeout, 10000, lock}]};
+        % Incomplete | Incorrect
+        true ->
             {next_state, locked, Data#{buttons := NewButtons}}
     end.
 
-open(state_timeout, lock,  Data) ->
+open(state_timeout, lock, Data) ->
     do_lock(),
     {next_state, locked, Data};
-open(cast, {button,_}, Data) ->
+open(cast, {button, _}, Data) ->
     {next_state, open, Data}.
 
 do_lock() ->

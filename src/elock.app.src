@@ -1,25 +1,25 @@
-{application, elock,
- [{description, "A lock door prototype"},
-  {vsn, "0.1.0"},
-  {registered, []},
-  {mod, {elock_app, []}},
-  {applications,
-   [kernel,
-    stdlib,
-    sqlapi,
-    ssh
-   ]},
-  {env,[]},
-  {modules, [
-      elock_app,
-      elock_statem,
-      elock_sup,
-      elock_oob_sup,
-      elock_sql_oob,
-      elock_ssh_oob,
-      elock_sqlapi
-  ]},
+{application, elock, [
+    {description, "A lock door prototype"},
+    {vsn, "0.1.0"},
+    {registered, []},
+    {mod, {elock_app, []}},
+    {applications, [
+        kernel,
+        stdlib,
+        sqlapi,
+        ssh
+    ]},
+    {env, []},
+    {modules, [
+        elock_app,
+        elock_statem,
+        elock_sup,
+        elock_oob_sup,
+        elock_sql_oob,
+        elock_ssh_oob,
+        elock_sqlapi
+    ]},
 
-  {licenses, ["Apache 2.0"]},
-  {links, [{"GitHub", "https://github.com/joaohf/elock"}]}
- ]}.
+    {licenses, ["Apache 2.0"]},
+    {links, [{"GitHub", "https://github.com/joaohf/elock"}]}
+]}.

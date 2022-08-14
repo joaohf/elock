@@ -1,5 +1,5 @@
 %% A ssh server key api callbacks just to bypass default ssh files
-%% 
+%%
 %% In this example I don't want to use the default ssh_file module
 %% which oblies to have ssh files.
 %%
