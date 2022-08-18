@@ -11,6 +11,8 @@
 
 -export([init/1]).
 
+-define(CODE_LOCK, [1, 2, 3, 4]).
+
 -define(SERVER, ?MODULE).
 
 start_link() ->
@@ -19,7 +21,7 @@ start_link() ->
 init([]) ->
     ElockStatem = #{
         id => elock_statem,
-        start => {elock_statem, start_link, ["1234"]},
+        start => {elock_statem, start_link, [?CODE_LOCK]},
         restart => permanent,
         type => worker,
         shutdown => 5000,
